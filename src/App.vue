@@ -1,26 +1,51 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div style="margin: 10px">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
   components: {
-    HelloWorld
+  },
+  data() {
+    return {
+      ocrData: null
+    }
+  },
+  methods: {
+    setOcrData(ocrData) {
+      this.ocrData = ocrData
+    },
+    getOcrData() {
+      return this.ocrData
+    }
+  },
+  provide() {
+    return {
+      setOcrData: this.setOcrData,
+      getOcrData: this.getOcrData,
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+button {
+  /* stop iphone from overriding button styling */
+  -webkit-appearance: none;
+}
+
+input, button {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  color: black
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  color: #fff
 }
 </style>
