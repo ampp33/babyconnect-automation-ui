@@ -108,7 +108,7 @@ export default {
             this.message = message
         },
         addAmountToBottles() {
-            this.babyDetails.bottles = this.babyDetails.bottles.map(bottleTime => { return { time: bottleTime, amountInOz: this.bottleAmountInOz }})
+            this.babyDetails.bottles = this.babyDetails.bottles.map(bottleTime => { return { time: bottleTime, amountInOz: this.bottleAmountInOz.toString() }})
         },
         async submitToBc() {
             this.isLoading = true
@@ -132,7 +132,11 @@ export default {
                     const data = await res.json()
                     this.showErrorMessage(data.errorMessage)
                     // change page to only reflect baby details that haven't been logged yet
-                    this.babyDetails = data.unloggedData
+                    const unloggedData = data.unloggedData
+                    // convert bottle objects back from an object to time strings, since that's what the UI
+                    // is working with
+                    unloggedData.bottles = unloggedData.bottles.map(bottle => bottle.time)
+                    this.babyDetails = unloggedData
                 } else {
                     console.log('success!')
                     this.showInfoMessage('Success!')
